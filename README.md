@@ -9,6 +9,13 @@ In the final stage, as described at hacking on Act will start as simple as:
 
 For more details, see the seven-step instructions below.
 
+Synced Folders
+==============
+
+A directory called `Act` will be created and mounted into
+/home/act_developer/Act. this enables editing inside and outside the VM.
+This might be very convenient.
+
 How to contribute
 =================
 

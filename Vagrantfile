@@ -58,7 +58,7 @@ sudo -u act_developer -i
 cd /home/act_developer
 
 export ACT_USER="/home/act_developer"
-export ACT_HOME="$ACT_USER/code/Act"
+export ACT_HOME="$ACT_USER/Act"
 export PERL5LIB="$ACT_HOME/lib"
 export ACTHOME=$ACT_HOME
 
@@ -95,7 +95,7 @@ conferences = test
 cookie_name = act
 searchlimit = 20
 dir_photos  = photos
-dir_ttc     = /home/act_developer/code/Act/var
+dir_ttc     = /home/act_developer/Act/var
 max_imgsize = 320x200
 
 [database]
@@ -182,8 +182,8 @@ Listen 8080
 <VirtualHost *:8080>
       ServerName   localhost:8080
       ServerAdmin  webmaster@example.com
-      DocumentRoot /home/act_developer/code/Act/wwwdocs
-      Include      /home/act_developer/code/Act/conf/httpd.conf
+      DocumentRoot /home/act_developer/Act/wwwdocs
+      Include      /home/act_developer/Act/conf/httpd.conf
 </VirtualHost>
 EOF
 
@@ -263,7 +263,7 @@ voyager.vm.provision "shell", inline: $provision_script
   # the path on the host to the actual folder. The second argument is
   # the path on the guest to mount the folder. And the optional third
   # argument is a set of non-required options.
-  config.vm.synced_folder "./code", "/home/act_developer/code"
+  config.vm.synced_folder "./Act", "/home/act_developer/Act", create: true
   
   # Provider-specific configuration so you can fine-tune various
   # backing providers for Vagrant. These expose provider-specific options.
