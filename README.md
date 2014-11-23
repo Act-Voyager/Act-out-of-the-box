@@ -3,7 +3,7 @@ Act out of the box
 
 In the final stage, as described at hacking on Act will start as simple as:
 
-    git clone https:/github.com/Act-Voyager/Act-out-of-the-box.git
+    curl -Os https://raw.githubusercontent.com/Act-Voyager/Act-out-of-the-box/master/Vagrantfile
     vagrant up
     vagrant ssh
 
@@ -44,11 +44,11 @@ Setup / Installation
 
     $ apt-get install vagrant virtualbox
 
-1) Clone Act-out-of-the-box Vagrant File from your favourite github account to
+2) Download the Act-out-of-the-box VagrantFile from your favourite github account to
    your work directory on your host system. (Optionally, consider forking
    the project on github and clone that one instead.)
 
-    $ git clone https://github.com/Act-Voyager/Act-out-of-the-box.git
+    $ curl -Os https://raw.githubusercontent.com/Act-Voyager/Act-out-of-the-box/master/Vagrantfile
 
 3) Optionally, edit the Vagrantfile field for config.vm.network ip
    address to suit your needs. By default, the VM is set up to use DHCP
@@ -57,16 +57,16 @@ Setup / Installation
 
     config.vm.network: "private_network", ip: "192.168.42.42"
 
-5) Run "vagrant up". This downloads the required image and set up
+4) Run "vagrant up". This downloads the required image and set up
    your Act instance.
 
     $ vagrant up
 
-6) Log into the VM to start Act setup process
+5) Log into the VM to start Act setup process
 
     $ vagrant ssh
 
-7) Start hacking!
+6) Start hacking!
 
 VagrantFile
 ===========
