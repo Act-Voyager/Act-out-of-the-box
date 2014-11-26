@@ -187,7 +187,10 @@ Listen 8080
 </VirtualHost>
 EOF
 
-sudo bash -c "cat /tmp/act_developer_http.conf >>/usr/local/apache/conf/httpd.conf"
+sudo bash -c "cat /tmp/act_developer_http.conf    >>/usr/local/apache/conf/httpd.conf"
+
+sudo sed -i 's/User nobody/User act_developer/g'    /usr/local/apache/conf/httpd.conf
+sudo sed -i 's/Group nogroup/Group act_developer/g' /usr/local/apache/conf/httpd.conf
 
 rm /tmp/act_developer_http.conf 
 
