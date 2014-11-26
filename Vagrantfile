@@ -78,6 +78,12 @@ git clone https://github.com/Act-Voyager/Act.git $ACT_HOME
 cpanm --sudo --installdeps $ACT_HOME
 
 #
+# Case Sensitive workaround
+#
+
+ln -s Act act
+
+#
 # create dir
 #
 
