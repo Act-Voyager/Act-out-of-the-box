@@ -62,6 +62,8 @@ export ACT_HOME="$ACT_USER/Act"
 export PERL5LIB="$ACT_HOME/lib"
 export ACTHOME=$ACT_HOME
 
+export ACT_CONF="voyager"
+
 #
 # install the Act software from github...
 #
@@ -87,8 +89,14 @@ ln -s Act act
 # create dir
 #
 
-cp -ai $ACT_HOME/eg/conf      $ACT_HOME
-cp -ai $ACT_HOME/skel/actdocs $ACT_HOME
+mkdir $ACT_HOME/wwwdocs/$ACT_CONF
+mv $ACT_HOME/wwwdocs/css      $ACT_HOME/wwwdocs/$ACT_CONF
+mv $ACT_HOME/wwwdocs/images   $ACT_HOME/wwwdocs/$ACT_CONF
+mv $ACT_HOME/wwwdocs/js       $ACT_HOME/wwwdocs/$ACT_CONF
+
+mkdir $ACT_HOME/actdocs/$ACT_CONF
+cp -ai $ACT_HOME/eg/conf      $ACT_HOME/actdocs/$ACT_CONF
+cp -ai $ACT_HOME/skel/actdocs $ACT_HOME/actdocs/$ACT_CONF
 mkdir $ACT_HOME/var
 
 #
