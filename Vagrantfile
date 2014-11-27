@@ -191,7 +191,7 @@ EOF
 # add VirtualHost to httpd.conf
 #
 
-cat >/tmp/act_developer_http.conf <<'EOF'
+cat >/tmp/act_developer_http.conf <<"EOF"
 Include $ACT_HOME/conf/apache
 EOF
 sudo bash -c "cat /tmp/act_developer_http.conf    >>/usr/local/apache/conf/httpd.conf"
@@ -200,7 +200,7 @@ rm /tmp/act_developer_http.conf
 sudo sed -i 's/User nobody/User act_developer/g'    /usr/local/apache/conf/httpd.conf
 sudo sed -i 's/Group nogroup/Group act_developer/g' /usr/local/apache/conf/httpd.conf
 
-cat >$ACT_HOME/conf/apache/act_main.conf <<'EOF'
+cat >$ACT_HOME/conf/apache/act_main.conf <<"EOF"
 PerlSetupEnv On
 PerlPassEnv ACTHOME
 # mod_perl initialisation
