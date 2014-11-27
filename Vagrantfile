@@ -119,6 +119,7 @@ user        = actuser_data
 passwd      = xyzzy;
 
 pg_dump     = /usr/local/bin/pg_dump
+dump_file   = /home/act_developer/actdb
 
 test_dsn    = dbi:Pg:dbname=acttest
 test_user   = actuser_data
