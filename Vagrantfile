@@ -177,8 +177,8 @@ notify_accept   = 1
 edition_open    = 0
 show_schedule   = 1
 durations       = 20 40 120
-start_date      = 2014-08-06 18:00:00
-end_date        = 2014-08-07 18:00:00
+start_date      = xx_start_date_xx
+end_date        = xx_end_date_xx
 
 [rooms]
 rooms = roomA roomB
@@ -200,6 +200,11 @@ name_en  = Registration
 amount   = 0
 name_en  = Registration
 EOF
+
+start_date=`date +"%F %T"`
+end_date=`date +"%F %T" -d"next week"`
+sed -i "s/xx_start_date_xx/$start_date/" $ACT_HOME/actdocs/$ACT_CONF/conf/act.ini
+sed -i "s/xx_end_date_xx/$end_date/" $ACT_HOME/actdocs/$ACT_CONF/conf/act.ini
 
 #
 # add VirtualHost to httpd.conf
