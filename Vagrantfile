@@ -105,7 +105,7 @@ mkdir -p $ACT_HOME/conf/apache
 
 cat >$ACT_HOME/conf/act.ini <<'EOF'
 [general]
-conferences = test
+conferences = conference_name
 cookie_name = act
 searchlimit = 20
 dir_photos  = photos
@@ -146,15 +146,17 @@ plugin = Fake
 apikey  = 0123456789ABCDEF0123456789ABCDEF
 EOF
 
+sed -i 's/conferences = conference_name/conferences = $ACT_CONF/' $ACT_HOME/conf/act.ini
+
 #
-# $ACT_HOME/conf/local.ini
+# $ACT_HOME/actdocs/$ACT_CONF/conf/act.ini
 #
 
-cat >$ACT_HOME/conf/local.ini <<'EOF'
+cat >$ACT_HOME/actdocs/$ACT_CONF/conf/act.ini <<'EOF'
 [general]
 default_language = en
 languages = en
-name_en = Perl Event Name
+name_en = Act Voyager Special Event
 default_country = fr
 full_uri = http://localhost:8080/
 timezone = Europe/Paris
