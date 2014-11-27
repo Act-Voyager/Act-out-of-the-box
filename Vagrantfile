@@ -171,7 +171,7 @@ gratis  = 1
 
 [talks]
 submissions_open = 1
-submissions_notify_address = philippe.bruhat@free.fr
+submissions_notify_address = act_talks@mongueurs.local
 submissions_notify_language = en
 notify_accept   = 1
 edition_open    = 0
