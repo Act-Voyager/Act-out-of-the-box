@@ -96,7 +96,8 @@ mkdir -p $ACT_HOME/actdocs/$ACT_CONF
 mv $ACT_HOME/eg/conf          $ACT_HOME/
 mv $ACT_HOME/skel/actdocs/*   $ACT_HOME/actdocs/$ACT_CONF
 
-mkdir $ACT_HOME/var
+mkdir -p $ACT_HOME/var
+mkdir -p $ACT_HOME/conf/apache
 
 #
 # $ACT_HOME/conf/act.ini
@@ -191,6 +192,22 @@ EOF
 #
 
 cat >/tmp/act_developer_http.conf <<'EOF'
+Include $ACT_HOME/conf/apache
+EOF
+sudo bash -c "cat /tmp/act_developer_http.conf    >>/usr/local/apache/conf/httpd.conf"
+rm /tmp/act_developer_http.conf 
+
+sudo sed -i 's/User nobody/User act_developer/g'    /usr/local/apache/conf/httpd.conf
+sudo sed -i 's/Group nogroup/Group act_developer/g' /usr/local/apache/conf/httpd.conf
+
+cat >$ACT_HOME/conf/apache/act_main.conf <<'EOF'
+PerlSetupEnv On
+PerlPassEnv ACTHOME
+# mod_perl initialisation
+PerlRequire $ACT_HOME/conf/startup.pl
+EOF
+
+cat >$ACT_HOME/conf/apache/conf_$ACT_CONF.conf <<'EOF'
 Listen 8080
 <VirtualHost *:8080>
       ServerName   localhost:8080
@@ -199,13 +216,6 @@ Listen 8080
       Include      /home/act_developer/Act/conf/httpd.conf
 </VirtualHost>
 EOF
-
-sudo bash -c "cat /tmp/act_developer_http.conf    >>/usr/local/apache/conf/httpd.conf"
-
-sudo sed -i 's/User nobody/User act_developer/g'    /usr/local/apache/conf/httpd.conf
-sudo sed -i 's/Group nogroup/Group act_developer/g' /usr/local/apache/conf/httpd.conf
-
-rm /tmp/act_developer_http.conf 
 
 #
 # restart Apache httpd
