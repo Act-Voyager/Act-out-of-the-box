@@ -191,7 +191,7 @@ EOF
 # add VirtualHost to httpd.conf
 #
 
-echo "Include $ACT_HOME/conf/apache" >>/usr/local/apache/conf/httpd.conf"
+echo "Include $ACT_HOME/conf/apache" >>/usr/local/apache/conf/httpd.conf
 
 sudo sed -i 's/User nobody/User act_developer/g'    /usr/local/apache/conf/httpd.conf
 sudo sed -i 's/Group nogroup/Group act_developer/g' /usr/local/apache/conf/httpd.conf
