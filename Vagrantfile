@@ -149,7 +149,7 @@ plugin = Fake
 apikey  = 0123456789ABCDEF0123456789ABCDEF
 EOF
 
-sed -i 's/conferences = conference_name/conferences = $ACT_CONF/' $ACT_HOME/conf/act.ini
+sed -i "s/conferences = conference_name/conferences = $ACT_CONF/" $ACT_HOME/conf/act.ini
 
 #
 # $ACT_HOME/actdocs/$ACT_CONF/conf/act.ini
