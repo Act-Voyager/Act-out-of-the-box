@@ -78,6 +78,7 @@ Setup / Installation
 Admin Access
 ===========
 In order to get a admin user you need to do the following:
+
 1) Go to the web interface and create a normal user
 
 2) ssh to the vagrant machine and go to /home/act_developer/Act/bin
