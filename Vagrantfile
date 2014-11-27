@@ -196,7 +196,7 @@ echo "Include $ACT_HOME/conf/apache" >>/usr/local/apache/conf/httpd.conf
 sudo sed -i 's/User nobody/User act_developer/g'    /usr/local/apache/conf/httpd.conf
 sudo sed -i 's/Group nogroup/Group act_developer/g' /usr/local/apache/conf/httpd.conf
 
-cat >$ACT_HOME/conf/apache/act_main.conf <<"EOF"
+cat >$ACT_HOME/conf/apache/act_main.conf <<EOF
 PerlSetupEnv On
 PerlPassEnv ACTHOME
 # mod_perl initialisation
