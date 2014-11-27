@@ -142,7 +142,8 @@ type        = Fake
 notify_bcc  = payments@mongueurs.local
 
 [payment_type_Fake]
-plugin = Fake
+plugin      = Fake
+notify_bcc  = payments@mongueurs.local
 
 [flickr]
 # see http://www.flickr.com/services/api/
@@ -181,8 +182,8 @@ dump_file = act.dump
 pg_dump = /usr/bin/pg_dump
 
 [payment]
+type     = Fake
 currency = EUR
-type_fake_notify_bcc = paymentbcc@localhost
 products = registration
 
 [product_registration]
