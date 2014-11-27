@@ -158,39 +158,47 @@ sed -i "s/conferences = conference_name/conferences = $ACT_CONF/" $ACT_HOME/conf
 
 cat >$ACT_HOME/actdocs/$ACT_CONF/conf/act.ini <<'EOF'
 [general]
-default_language = en
+full_uri  = http://localhost:8080/
 languages = en
-name_en = Act Voyager Special Event
-default_country = fr
-full_uri = http://localhost:8080/
+default_language = en
+default_country  = fr
+name_en  = Act Voyager Special Event
 timezone = Europe/Paris
 
+[registration]
+open    = 1
+gratis  = 1
+
 [talks]
-durations = 20 40 120
-start_date = 2014-08-06 18:00:00
-end_date = 2014-08-07 18:00:00
-submissions_open = 0
-show_schedule = 0
+submissions_open = 1
+submissions_notify_address = philippe.bruhat@free.fr
+submissions_notify_language = en
+notify_accept   = 1
+edition_open    = 0
+show_schedule   = 1
+durations       = 20 40 120
+start_date      = 2014-08-06 18:00:00
+end_date        = 2014-08-07 18:00:00
 
 [rooms]
 rooms = roomA roomB
 roomA_name_en = Room A
 roomB_name_en = Room B
 
-[database]
-dump_file = act.dump
-pg_dump = /usr/bin/pg_dump
-
 [payment]
 type     = Fake
 currency = EUR
+open     = 1
+invoices = 0
 products = registration
 
 [product_registration]
-prices = 1
-name_en = Registration
+prices   = 1
+name_en  = Registration
+
 [product_registration_price1]
-amount = 25
+amount   = 0
+name_en  = Registration
 EOF
 
 #
