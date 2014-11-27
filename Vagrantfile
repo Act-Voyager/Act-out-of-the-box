@@ -95,8 +95,9 @@ mv $ACT_HOME/wwwdocs/images   $ACT_HOME/wwwdocs/$ACT_CONF
 mv $ACT_HOME/wwwdocs/js       $ACT_HOME/wwwdocs/$ACT_CONF
 
 mkdir -p $ACT_HOME/actdocs/$ACT_CONF
-cp -ai $ACT_HOME/eg/conf      $ACT_HOME/actdocs/$ACT_CONF
-cp -ai $ACT_HOME/skel/actdocs $ACT_HOME/actdocs/$ACT_CONF
+mv $ACT_HOME/eg/conf          $ACT_HOME/
+mv $ACT_HOME/skel/actdocs     $ACT_HOME/actdocs/$ACT_CONF
+
 mkdir $ACT_HOME/var
 
 #
