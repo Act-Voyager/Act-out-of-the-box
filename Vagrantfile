@@ -118,6 +118,8 @@ dsn         = dbi:Pg:dbname=act_sample
 user        = actuser_data
 passwd      = xyzzy;
 
+pg_dump     = /usr/local/bin/pg_dump
+
 test_dsn    = dbi:Pg:dbname=acttest
 test_user   = actuser_data
 test_passwd = xyzzy;
