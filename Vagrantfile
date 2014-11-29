@@ -68,7 +68,7 @@ export ACT_CONF="voyager"
 # install the Act software from github...
 #
 
-git clone https://github.com/Act-Voyager/Act.git $ACT_HOME
+git clone git@github.com:Act-Voyager/Act.git $ACT_HOME
 
 #
 # cpanm is smart enough to handle the whole distribution at once
@@ -90,11 +90,11 @@ ln -s Act act
 #
 
 mkdir -p $ACT_HOME/wwwdocs/$ACT_CONF
-mv $ACT_HOME/skel/wwwdocs/*   $ACT_HOME/wwwdocs/$ACT_CONF
+cp -R $ACT_HOME/skel/wwwdocs/*   $ACT_HOME/wwwdocs/$ACT_CONF
 
 mkdir -p $ACT_HOME/actdocs/$ACT_CONF
-mv $ACT_HOME/eg/conf          $ACT_HOME/
-mv $ACT_HOME/skel/actdocs/*   $ACT_HOME/actdocs/$ACT_CONF
+cp -R $ACT_HOME/eg/conf          $ACT_HOME/
+cp -R $ACT_HOME/skel/actdocs/*   $ACT_HOME/actdocs/$ACT_CONF
 
 mkdir -p $ACT_HOME/var
 mkdir -p $ACT_HOME/conf/apache
