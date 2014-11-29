@@ -113,7 +113,7 @@ dir_ttc     = /home/act_developer/Act/var
 max_imgsize = 320x200
 
 [database]
-name        = act
+name        = act_sample
 dsn         = dbi:Pg:dbname=act_sample
 user        = actuser_data
 passwd      = xyzzy;
