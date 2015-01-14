@@ -65,6 +65,14 @@ export ACTHOME=$ACT_HOME
 export ACT_CONF="voyager"
 
 #
+# add github to known hosts
+#
+
+ssh-keyscan -t rsa github.com >>$ACT_USER/.ssh/known_hosts
+
+chown act_developer $ACT_USER/.ssh/known_hosts
+
+#
 # install the Act software from github...
 #
 
