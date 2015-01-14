@@ -68,7 +68,9 @@ export ACT_CONF="voyager"
 # install the Act software from github...
 #
 
-git clone git@github.com:Act-Voyager/Act.git $ACT_HOME
+# git clone git@github.com:Act-Voyager/Act.git $ACT_HOME # see issues
+git clone https://github.com/Act-Voyager/Act.git $ACT_HOME
+
 
 #
 # cpanm is smart enough to handle the whole distribution at once
