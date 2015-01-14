@@ -287,8 +287,8 @@ voyager.vm.provision "shell", inline: $provision_script
   # Every Vagrant virtual environment requires a box to build off of.
   config.vm.box     = "voyager"
   config.vm.box_url = "http://thema-media.nl/act-out-of-the-box/package.box"
-# config.vm.box_url = "file:///Users/hoesel_v_tj/Documents/ACT%20Voyager/Vagrant/package.box"
-  
+# config.vm.box_url = "file://act-out-of-the-box.box"
+
   # Disable automatic box update checking. If you disable this, then
   # boxes will only be checked for updates when the user runs
   # `vagrant box outdated`. This is not recommended.
