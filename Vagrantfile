@@ -123,8 +123,10 @@ dir_ttc     = /home/act_developer/Act/var
 max_imgsize = 320x200
 
 [database]
-name        = act_sample
-dsn         = dbi:Pg:dbname=act_sample
+# name      = act_sample
+# dsn       = dbi:Pg:dbname=act_sample
+name        = act
+dsn         = dbi:Pg:dbname=act
 user        = actuser_data
 passwd      = xyzzy;
 
@@ -141,7 +143,8 @@ test        = 0
 sender_address = act_tester@mongueurs.local
 
 [wiki]
-dbname      = act_sample_wiki
+# dbname    = act_sample_wiki
+dbname      = actwiki
 dbuser      = actuser_wiki
 dbpass      = xyzzy;
 
