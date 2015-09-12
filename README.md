@@ -103,6 +103,15 @@ Known Issues
 
 * missing setup
 
+* "Warning: Authentication failure. Retrying..." during vagrant up
+
+  * ctrl-C or wait till it ends
+  * edit Vagrantfile to change config.ssh.private_key_path to a private key of yours and be sure it is added to your ssh-agent
+  * ssh vagrant@localhost -p 2222  (password: vagrant)
+    * sudo su - act_developer
+    * edit .ssh/authorized_keys to add the public key of the key to set in config.ssh.private_key_path
+
+
 Acknowledgements
 ================
 
