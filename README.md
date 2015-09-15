@@ -109,7 +109,9 @@ Known Issues
   * edit Vagrantfile to change config.ssh.private_key_path to a private key of yours and be sure it is added to your ssh-agent
   * ssh vagrant@localhost -p 2222  (password: vagrant)
     * sudo su - act_developer
-    * edit .ssh/authorized_keys to add the public key of the key to set in config.ssh.private_key_path
+    * edit .ssh/authorized_keys to add the public key of the key in config.ssh.private_key_path
+  * vagrant halt
+  * vagrant up
 
 
 Acknowledgements
