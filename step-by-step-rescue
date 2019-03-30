@@ -1,0 +1,287 @@
+Continuing from old box:
+
+vagrant ssh
+
+add missing packages
+
+sudo apt-get install perl-doc tree
+
+remove old act_developer
+
+sudo user del act_developer
+sudo rm -rf /home/act_developer
+
+Add users:
+
+adduser --disabled-password --gecos "Act Legacy"    legacy
+adduser --disabled-password --gecos "Act Organiser" orga
+adduser --disabled-password --gecos "Act Voyager"   voyager
+
+edit the /etc/group and add users: (group numbers might be different)
+
+sudo vim /etc/group
+admin:x:110:vagrant,legacy,orga,voyager
+actusers:x:1003:legacy,orga,voyager
+
+setup .ssh
+
+ssh-keyscan -t rsa github.com >> /home/vagrant/.ssh/known_hosts
+
+
+FOR EACH USER:
+
+export NEW_USER=legacy
+export NEW_USER=orga
+export NEW_USER=voyager
+
+for NEW_USER in ‘legacy orga voyager’;
+do
+  sudo cp -R /home/vagrant/.ssh /home/$NEW_USER/
+  sudo chown -R $NEW_USER /home/$NEW_USER/.ssh
+  
+  cat >>/home/$NEW_USER/.profile <<‘EOT’
+  export ACT_HOME=/home/legacy/Act
+  export ACT_REPO=/home/orga/conferences
+  export LANGUAGE=en_US.UTF-8
+  export LC_ALL=en_US.UTF-8
+  EOT
+done
+
+END FOR EACH
+
+logout
+shutdown the machine
+vagrant halt
+edit the Vagrant file
+Vagrantfile:
+config.vm.synced_folder "./act/legacy",      "/home/legacy/Act",        create: true, group: "actusers", owner: "legacy"
+config.vm.synced_folder "./act/conferences", "/home/orga/conferences",  create: true, group: "actusers", owner: "orga"
+config.vm.synced_folder "./act/voyager",     "/home/voyager/Documents", create: true, group: "actusers", owner: "voyager"
+
+reboot the machine
+vagrant up
+
+Check for IdentityFile
+vagrant ssh-config
+ssh-add ~/.vagrant.d/boxes/box-name/0/virtualbox/vagrant_private_key
+
+install Act
+ssh -p 2222 legacy@localhost
+
+# export ACT_HOME=$HOME/Act
+
+git clone https://github.com/book/Act.git $ACT_HOME
+cd Act
+
+remove unicode issue from META.yml - Builders do not like it or anywhere else
+vim META.yml
+  - "-2007 Philippe \"BooK\" Bruhat and Eric Cholet."
+
+cpanm --sudo --verbose --installdeps .
+
+
+Fix Test... it just shows that nobody bothered to run them since 2014
+
+patch -p1 << ‘EOT’
+--- a/t/11talk.t
++++ b/t/11talk.t
+@@ -68,10 +68,16 @@ is_deeply( Act::Talk->new( user_id => $user2->user_id ),
+    room         => undef,
+    lang         => undef,
+    comment      => undef,
++   teaser       => undef,      
++   url_video1   => undef,
++   url_video2   => undef,
++   url_video3   => undef,
+    lightning    => 1,
+    accepted     => 1,
+    confirmed    => 0,
++   hide_details => 0,
++   allow_record => 1,
+    },
+   "User 2's talk" );
+ 
+EOT
+
+prepare Act:
+
+create missing dirs:
+mkdir -p $ACT_HOME/actdocs
+mkdir -p $ACT_HOME/var
+mkdir -p $ACT_HOME/conf/httpd/conferences
+
+
+setting up test environment …. there is non!
+
+# fix $ACTHOME
+
+export ACTHOME=$ACT_HOME
+
+# create the general act.ini config file inside conf
+
+cat >$ACT_HOME/conf/act.ini <<'EOF'
+[general]
+conferences = conference_name
+cookie_name = act
+searchlimit = 20
+dir_photos  = photos
+dir_ttc     = /home/legacy/Act/var
+max_imgsize = 320x200
+
+[database]
+# name      = act_sample
+# dsn       = dbi:Pg:dbname=act_sample
+name        = act
+dsn         = dbi:Pg:dbname=act
+user        = actuser_data
+passwd      = xyzzy;
+
+pg_dump     = /usr/local/bin/pg_dump
+dump_file   = /home/legacy/actdb
+
+test_dsn    = dbi:Pg:dbname=acttest
+test_user   = actuser_data
+test_passwd = xyzzy;
+
+[email]
+sendmail    = /usr/sbin/sendmail
+test        = 0
+sender_address = act_tester@mongueurs.local
+
+[wiki]
+# dbname    = act_sample_wiki
+dbname      = actwiki
+dbuser      = actuser_wiki
+dbpass      = xyzzy;
+
+[payment]
+open      = 0
+invoices  = 0
+type        = Fake
+notify_bcc  = payments@mongueurs.local
+
+[payment_type_Fake]
+plugin      = Fake
+notify_bcc  = payments@mongueurs.local
+
+[flickr]
+# see http://www.flickr.com/services/api/
+apikey  = 0123456789ABCDEF0123456789ABCDEF
+EOT
+
+sed -i "s/conferences = conference_name/conferences = $ACT_CONF/" $ACT_HOME/conf/act.ini
+
+# create a conference config
+
+cat >$ACT_HOME/actdocs/$ACT_CONF/conf/act.ini <<'EOF'
+[general]
+full_uri  = http://localhost:8080/
+languages = en
+default_language = en
+default_country  = fr
+name_en  = Test Converence Special Event
+timezone = Europe/Paris
+
+[registration]
+open    = 1
+gratis  = 1
+
+[talks]
+submissions_open = 1
+submissions_notify_address = act_talks@mongueurs.local
+submissions_notify_language = en
+notify_accept   = 1
+edition_open    = 0
+show_schedule   = 1
+durations       = 20 40 120
+start_date      = xx_start_date_xx
+end_date        = xx_end_date_xx
+
+[rooms]
+rooms = roomA roomB
+roomA_name_en = Room A
+roomB_name_en = Room B
+
+[payment]
+type     = Fake
+currency = EUR
+open     = 1
+invoices = 0
+products = registration
+
+[product_registration]
+prices   = 1
+name_en  = Registration
+
+[product_registration_price1]
+amount   = 0
+name_en  = Registration
+EOT
+
+# Edit the starting and ending times
+
+start_date=`date +"%F %T"`
+end_date=`date +"%F %T" -d"next week"`
+sed -i "s/xx_start_date_xx/$start_date/" $ACT_HOME/actdocs/$ACT_CONF/conf/act.ini
+sed -i "s/xx_end_date_xx/$end_date/" $ACT_HOME/actdocs/$ACT_CONF/conf/act.ini
+
+# tests should work now
+
+# we can now build and test
+
+cpanm --sudo $ACT_HOME
+
+
+
+configure Apache
+
+
+
+
+
+#
+# add VirtualHost to httpd.conf
+#
+
+echo "Include $ACT_HOME/conf/apache" >>/usr/local/apache/conf/httpd.conf
+
+sudo sed -i 's/User nobody/User legacy/g’       /usr/local/apache/conf/httpd.conf
+sudo sed -i 's/Group nogroup/Group act_users/g’ /usr/local/apache/conf/httpd.conf
+
+cat >$ACT_HOME/conf/apache/act_main.conf <<EOT
+PerlSetupEnv On
+PerlPassEnv ACTHOME
+# mod_perl initialisation
+PerlRequire $ACTHOME/conf/startup.pl
+EOT
+
+cat >$ACT_HOME/conf/apache/conf_$ACT_CONF.conf <<'EOT’
+Listen 8080
+<VirtualHost *:8080>
+      ServerName   localhost:8080
+      ServerAdmin  webmaster@example.com
+      DocumentRoot /home/legacy/Act/wwwdocs
+      Include      /home/legacy/Act/conf/httpd.conf
+</VirtualHost>
+EOT
+
+#
+# restart Apache httpd
+#
+
+sudo ACTHOME=$ACT_HOME PERL5LIB=$PERL5LIB /usr/local/apache/bin/apachectl graceful
+
+#
+# surf to http:localhost:8080/___test____/index.html
+#
+
+
+
+adding other conferences:
+
+
+export CONFERENCE_ID = conference_id
+ln -s /home/orga/conferences/$CONFERENCE_ID/actdocs/ $ACT_HOME/actdocs/$CONFERENCE_ID
+ln -s /home/orga/conferences/$CONFERENCE_ID/wwwdocs/ $ACT_HOME/wwwdocs/$CONFERENCE_ID
+
+
